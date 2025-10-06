@@ -19,7 +19,7 @@ services:
       - /var/lib/emqx/data:/opt/emqx/data
       - /etc/emqx/config:/opt/emqx/etc
       - /var/log/emqx:/opt/emqx/log
-      # - /etc/emqx/certs:/opt/emqx/etc/certs
+      - /etc/emqx/certs:/opt/emqx/etc/certs
 
 networks:
   default:
