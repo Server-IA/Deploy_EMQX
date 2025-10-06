@@ -1,6 +1,6 @@
 services:
   emqx:
-    image: emqx
+    image: emqx/emqx:5.8.8
     container_name: emqx_broker
     restart: always
     ports:
