@@ -1,0 +1,26 @@
+services:
+  emqx:
+    image: emqx/emqx:latest
+    container_name: emqx_broker
+    restart: always
+    ports:
+      - "1883:1883" # MQTT estándar
+      - "8883:8883" # MQTTS (Cifrado TLS/SSL)
+      - "8080:8080" # Dashboard Web
+
+    environment:
+      - "EMQX_DASHBOARD__DEFAULT_USER__PASSWORD=your_secure_password"
+      # Configuración TLS/SSL
+      - "EMQX_LISTENERS__SSL__DEFAULT__BIND=8883"
+      - "EMQX_LISTENERS__SSL__DEFAULT__KEYFILE=/opt/emqx/etc/certs/key.pem"
+      - "EMQX_LISTENERS__SSL__DEFAULT__CERTFILE=/opt/emqx/etc/certs/cert.pem"
+
+    volumes:
+      - ./emqx_data:/opt/emqx/data
+      - ./emqx_etc:/opt/emqx/etc
+      - ./emqx_log:/opt/emqx/log
+      - ./emqx_certs:/opt/emqx/etc/certs
+
+networks:
+  default:
+    driver: bridge
