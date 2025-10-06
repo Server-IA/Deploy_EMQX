@@ -1,27 +1,50 @@
 services:
   emqx:
-    image: emqx/emqx:latest
-    container_name: emqx_broker
-    restart: always
+    image: emqx:latest
+    container_name: ${EMQX_NAME}
+    hostname: ${EMQX_HOST}
     ports:
-      - "1883:1883" # MQTT estándar
-      - "8883:8883" # MQTTS (Cifrado TLS/SSL)
-      - "18083:18083" # Dashboard Web
-
-    environment:
-      - "EMQX_NAME=${EMQX_NAME}"
-      - "EMQX_HOST=${EMQX_HOST}"
-      - "EMQX_NODE__COOKIE=${EMQX_COOKIE}"
-      # - "EMQX_LISTENERS__SSL__DEFAULT__BIND=8883"
-      # - "EMQX_LISTENERS__SSL__DEFAULT__KEYFILE=/opt/emqx/etc/certs/key.pem"
-      # - "EMQX_LISTENERS__SSL__DEFAULT__CERTFILE=/opt/emqx/etc/certs/cert.pem"
-
+      - "18083:18083"
+      - "1883:1883"
+      - "8083:8083"
+      - "8883:8883"
+      - "8084:8084"
     volumes:
-      - /var/lib/emqx/data:/opt/emqx/data
-      - /etc/emqx/config:/opt/emqx/etc
-      - /var/log/emqx:/opt/emqx/log
-      - /etc/emqx/certs:/opt/emqx/etc/certs
+      - /opt/emqx/plugins:/opt/emqx/plugins:rw
+      - /opt/emqx/data:/opt/emqx/data:rw
+      - /opt/emqx/log:/opt/emqx/log:rw
+      - /opt/emqx/etc/emqx.conf:/opt/emqx/etc/emqx.conf:ro
+    environment:
+      - EMQX_NAME=${EMQX_NAME}
+      - EMQX_HOST=${EMQX_HOST}
+      - EMQX_NODE__DATA_DIR="data"
+      - EMQX_LOG__FILE__DEFAULT__ENABLE=true
+      - EMQX_LOG__CONSOLE__ENABLE=false
+      - EMQX_DASHBOARD__LISTENERS__HTTP__BIND=18083
+      - EMQX_NODE__COOKIE=${EMQX_COOKIE}
+    privileged: true
+    restart: on-failure:3
+    healthcheck:
+      test: ["CMD", "/opt/emqx/bin/emqx_ctl", "status"]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 90s
+    sysctls:
+      net.core.somaxconn: 32768
+      net.ipv4.tcp_syncookies: 0
+      net.ipv4.tcp_max_syn_backlog: 16384
+      net.ipv4.tcp_max_tw_buckets: 1048576
+      net.ipv4.tcp_fin_timeout: 15
+      net.ipv4.ip_local_port_range: "1024 65535"
+    ulimits:
+      nproc: 1048576
+      nofile:
+        soft: 1048576
+        hard: 1048576
+    networks:
+      - emqx_bridge
 
 networks:
-  default:
+  emqx_bridge:
     driver: bridge
