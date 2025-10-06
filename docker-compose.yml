@@ -9,7 +9,7 @@ services:
       - "8080:8080" # Dashboard Web
 
     environment:
-      - "EMQX_DASHBOARD__DEFAULT_USER__PASSWORD=your_secure_password"
+      - "EMQX_DASHBOARD__DEFAULT_USER__PASSWORD=${EMQX_DASHBOARD_PASS}"
       # Configuración TLS/SSL
       - "EMQX_LISTENERS__SSL__DEFAULT__BIND=8883"
       - "EMQX_LISTENERS__SSL__DEFAULT__KEYFILE=/opt/emqx/etc/certs/key.pem"
