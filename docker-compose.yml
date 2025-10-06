@@ -6,7 +6,7 @@ services:
     ports:
       - "1883:1883" # MQTT estándar
       - "8883:8883" # MQTTS (Cifrado TLS/SSL)
-      - "8081:18083" # Dashboard Web
+      - "18083:18083" # Dashboard Web
 
     environment:
       # - "EMQX_AUTH__USER__1__USERNAME=admin"
