@@ -11,9 +11,9 @@ services:
     environment:
       # - "EMQX_AUTH__USER__1__USERNAME=admin"
       # - "EMQX_AUTH__USER__1__PASSWORD=${EMQX_DASHBOARD_PASS}"
-      - "EMQX_LISTENERS__SSL__DEFAULT__BIND=8883"
-      - "EMQX_LISTENERS__SSL__DEFAULT__KEYFILE=/opt/emqx/etc/certs/key.pem"
-      - "EMQX_LISTENERS__SSL__DEFAULT__CERTFILE=/opt/emqx/etc/certs/cert.pem"
+      # - "EMQX_LISTENERS__SSL__DEFAULT__BIND=8883"
+      # - "EMQX_LISTENERS__SSL__DEFAULT__KEYFILE=/opt/emqx/etc/certs/key.pem"
+      # - "EMQX_LISTENERS__SSL__DEFAULT__CERTFILE=/opt/emqx/etc/certs/cert.pem"
 
     volumes:
       - /var/lib/emqx/data:/opt/emqx/data
