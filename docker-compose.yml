@@ -9,15 +9,15 @@ services:
       - "18083:18083" # Dashboard Web
 
     environment:
-      # - "EMQX_NAME=emqx"
-      # - "EMQX_HOST=emqx.inmero.co"
-      - "EMQX_NODE_NAME=emqx@emqx.inmero.co"
+      - "EMQX_NAME=${EMQX_NAME}"
+      - "EMQX_HOST=${EMQX_HOST}"
+      # - "EMQX_NODE_NAME=emqx@emqx.inmero.co"
       - "EMQX_NODE__COOKIE=${EMQX_COOKIE}"
-    # - "EMQX_AUTH__USER__1__USERNAME=admin"
-    # - "EMQX_AUTH__USER__1__PASSWORD=${EMQX_DASHBOARD_PASS}"
-    # - "EMQX_LISTENERS__SSL__DEFAULT__BIND=8883"
-    # - "EMQX_LISTENERS__SSL__DEFAULT__KEYFILE=/opt/emqx/etc/certs/key.pem"
-    # - "EMQX_LISTENERS__SSL__DEFAULT__CERTFILE=/opt/emqx/etc/certs/cert.pem"
+      # - "EMQX_AUTH__USER__1__USERNAME=admin"
+      # - "EMQX_AUTH__USER__1__PASSWORD=${EMQX_DASHBOARD_PASS}"
+      # - "EMQX_LISTENERS__SSL__DEFAULT__BIND=8883"
+      # - "EMQX_LISTENERS__SSL__DEFAULT__KEYFILE=/opt/emqx/etc/certs/key.pem"
+      # - "EMQX_LISTENERS__SSL__DEFAULT__CERTFILE=/opt/emqx/etc/certs/cert.pem"
 
     volumes:
       - /var/lib/emqx/data:/opt/emqx/data
