@@ -14,6 +14,7 @@ services:
       - /opt/emqx/data:/opt/emqx/data:rw
       - /opt/emqx/log:/opt/emqx/log:rw
       - /opt/emqx/etc/emqx.conf:/opt/emqx/etc/emqx.conf:ro
+      - /opt/emqx/etc/certs:/opt/emqx/etc/certs:rw
     environment:
       - EMQX_NAME=${EMQX_NAME}
       - EMQX_HOST=${EMQX_HOST}
